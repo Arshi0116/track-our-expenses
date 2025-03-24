@@ -20,3 +20,7 @@ function App() {
 }
 
 export default App
+//  <Input label='category' id='category'name='category'value={expense.category}  onChange={(e) =>
+//   setExpense((prevState) => ({ ...prevState, category: e.target.value })) } error={error.category}/>
+
+

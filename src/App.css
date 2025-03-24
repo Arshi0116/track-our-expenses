@@ -109,6 +109,7 @@ main {
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    
 }
 
 .context-menu div {
@@ -119,6 +120,14 @@ main {
 
 .context-menu div:hover {
     background-color: #ddd;
+}
+.erorr{
+    color: red;
+    margin: 0px;
+    position: fixed;
+    margin-left: 80px;
+    margin-top: 4px;
+    font-size: 12px;
 }
 @media (max-width: 900px) {
     body {
