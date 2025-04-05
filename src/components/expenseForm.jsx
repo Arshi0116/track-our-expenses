@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from './Input'
 import { SelectInput } from './SelectInput'
+import { rules } from 'eslint-plugin-react-refresh'
 
 export default function ExpenseForm({ setExpenses }) {
   const [expense, setExpense] = useState({
@@ -9,18 +10,28 @@ export default function ExpenseForm({ setExpenses }) {
     amount: '',
   })
   const[error,setError]=useState({})
+  const validationconfig={
+    key: crypto.randomUUID(),
+    title:[{required:true,message:"please give the title"},
+      {minlength:true,message:"minimum alphabet should be more than 5"}],
+    category:[{required:true,message:"please select any category"}],
+    amount:[{required:true,message:"please write some amount"}],
+  }
  const validate=(formData)=>{
   const errorData={}
-  if(!formData.title){
-    errorData.title='0pps!!! title is required'
-  }
-  if(!formData.category){
-    errorData.category='please select the category'
-  }
+  Object.entries(formData).forEach(([key,value])=>{
+    validationconfig[key].forEach((rule)=>{
+      if(rule.required && !value){
+        return errorData[key]=rule.message 
+     
+      }
+      if(rule.minlength && value.length<5 ){ 
+        return errorData[key]=rule.message
+      }
+    })  })
 
-  if(!formData.amount){
-    errorData.amount='0pps!!! amount is required'
-  }
+
+
 setError(errorData)
 return errorData
  }

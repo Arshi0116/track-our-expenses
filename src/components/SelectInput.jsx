@@ -5,6 +5,7 @@ export const SelectInput = ({label,id,name,value,onChange,slectLable,options,err
     <div className="input-container">
     <label htmlFor={label}>{label}</label>
     <select
+   
       id={id}
       name={name}
       value={value}
@@ -13,7 +14,7 @@ export const SelectInput = ({label,id,name,value,onChange,slectLable,options,err
       <option value="" hidden>
         {slectLable}
       </option>
-      {options.map(opt=> <option value={opt}>{opt}</option>)}
+      {options.map((opt,i)=> <option  key={i} value={opt}>{opt}</option>)}
    
     
     </select>

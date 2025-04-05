@@ -1,13 +1,21 @@
-import React from 'react'
+import { useState } from 'react'
+import ContextMenu from './ContextMenu'
+import { useFilter } from './hooks/useFilter'
 
-export default function ExpenseTable({ expenses }) {
+export default function ExpenseTable({ expenses,setExpenses }) {
+ const [result,setQuary]= useFilter(expenses,(data)=>data.category)
+ const[contextMenu,setContectMenu]=useState({})
+ const [id,setid]=useState('')
+ const total= result.reduce((acc,cur)=> acc+cur.amount ,0)
   return (
-    <table className="expense-table">
+  <>
+    <ContextMenu ContextMenu={contextMenu} setContectMenu={setContectMenu} setExpenses={setExpenses} id={id}/>
+   <table className="expense-table" onClick={(e)=>{setContectMenu({})}}>
       <thead>
         <tr>
           <th>Title</th>
           <th>
-            <select>
+            <select onChange={(e)=>{setQuary(e.target.value)}}>
               <option value="">All</option>
               <option value="grocery">Grocery</option>
               <option value="clothes">Clothes</option>
@@ -42,8 +50,12 @@ export default function ExpenseTable({ expenses }) {
         </tr>
       </thead>
       <tbody>
-        {expenses.map(({id, title, category, amount}) => (
-          <tr key={id}>
+        {result.map(({id, title, category, amount}) => (
+          <tr key={id} id={id} onContextMenu={(e)=>
+          { e.preventDefault()
+            setid(id)
+            setContectMenu({left:e.clientX,
+            top:e.clientY})}}>
             <td>{title}</td>
             <td>{category}</td>
             <td>₹{amount}</td>
@@ -52,9 +64,9 @@ export default function ExpenseTable({ expenses }) {
         <tr>
           <th>Total</th>
           <th></th>
-          <th>₹8100</th>
+          <th>{total}</th>
         </tr>
       </tbody>
     </table>
-  )
-}
+  </>
+  )}
