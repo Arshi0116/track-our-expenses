@@ -3,12 +3,8 @@ import { Input } from './Input'
 import { SelectInput } from './SelectInput'
 import { rules } from 'eslint-plugin-react-refresh'
 
-export default function ExpenseForm({ setExpenses }) {
-  const [expense, setExpense] = useState({
-    title: '',
-    category: '',
-    amount: '',
-  })
+export default function ExpenseForm({ setExpenses,expense ,setExpense ,rowId}) {
+  
   const[error,setError]=useState({})
   const validationconfig={
     key: crypto.randomUUID(),
@@ -64,7 +60,7 @@ return errorData
   
       <Input label='Amount' id='amount'name='amount'value={expense.amount}  onChange={(e) =>
       setExpense((prevState) => ({ ...prevState, amount: e.target.value })) } error={error.amount}/>
-      <button className="add-btn">Add</button>
+      <button className="add-btn">{rowId? 'Save' : 'Add'}</button>
     </form>
   )
 }
